@@ -26,6 +26,8 @@ class SinglyLinkedList
 
   # TODO returns true if head instance variable is nil; false if not nil
   def empty?
+    return true if @head == nil
+    false
   end
 
   def inspect
@@ -44,6 +46,13 @@ class SinglyLinkedList
 
   # TODO - return the number of nodes in the list
   def length
+    count = 0
+    current_node = @head
+    until current_node.nil? do
+      count += 1
+      current_node = current_node.next
+    end
+    count
   end
 
   def insert_at_start node_or_data
@@ -64,6 +73,9 @@ class SinglyLinkedList
 
   # TODO - remove the first node
   def remove_from_start
+    if !self.empty?
+      @head = @head.next
+    end
   end
 
   def remove_from_end
@@ -92,10 +104,30 @@ class SinglyLinkedList
 
   # TODO - return true if there is a node in this list with the given data; false if not
   def data_exists? data
+    current_node = @head
+    until current_node.nil? do
+      return true if current_node.data == data
+      current_node = current_node.next
+    end
+    false
   end
 
   # TODO - find and delete the given node
   def delete node
+    if @head == node
+      @head = @head.next
+    else
+      previous_node = @head
+      current_node = @head.next
+      until current_node.nil? do
+        if current_node == node
+          previous_node.next = current_node.next
+        else
+          previous_node = current_node
+          current_node = current_node.next
+        end
+      end
+    end
   end
 
   # BONUS WITH SOLUTION - find and delete the first node with the given data
